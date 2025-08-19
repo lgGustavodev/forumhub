@@ -16,7 +16,7 @@ import java.util.Map;
 import java.util.function.Function;
 
 @Service
-public class TokenService {
+public class JwtService {
 
     @Value("${forumhub.jwt.secret}")
     private String secret;

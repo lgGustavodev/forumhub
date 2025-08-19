@@ -7,6 +7,7 @@ import com.forumhub.forumhub.model.Usuario;
 import com.forumhub.forumhub.repository.CursoRepository;
 import com.forumhub.forumhub.repository.TopicoRepository;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -38,7 +39,7 @@ public class TopicoController {
             @AuthenticationPrincipal Usuario usuario
     ) {
         var curso = cursoRepository.findById(dto.cursoId())
-                .orElseThrow(() -> new RuntimeException("Curso não encontrado"));
+                .orElseThrow(() -> new EntityNotFoundException("Curso não encontrado"));
         var topico = new Topico();
         topico.setTitulo(dto.titulo());
         topico.setMensagem(dto.mensagem());
@@ -65,7 +66,7 @@ public class TopicoController {
     @GetMapping("/{id}")
     public ResponseEntity<TopicoResponseDTO> detalhar(@PathVariable Long id) {
         var topico = topicoRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Tópico não encontrado"));
+                .orElseThrow(() -> new EntityNotFoundException("Tópico não encontrado"));
         return ResponseEntity.ok(new TopicoResponseDTO(topico));
     }
 }

@@ -45,7 +45,7 @@ public class AuthController {
 
     @PostMapping("/registrar")
     public ResponseEntity<Void> registrar(@RequestBody @Valid RegistrarUsuarioDTO data) {
-        if (usuarioRepository.findByEmail(data.email()) != null) {
+        if (usuarioRepository.findByEmail(data.email()).isPresent()) {
             return ResponseEntity.badRequest().build();
         }
 
